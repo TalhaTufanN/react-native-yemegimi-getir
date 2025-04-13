@@ -5,6 +5,8 @@ import { StatusBar } from "expo-status-bar";
 import Icon from "react-native-vector-icons/Feather";
 import { themeColors } from "../theme/theme";
 import Categories from "../components/categories";
+import FeaturedRow from "../components/featuredRow";
+import { featured } from "../constants";
 
 export default function HomeScreen() {
   return (
@@ -30,11 +32,25 @@ export default function HomeScreen() {
       {/* Ana ekran içeriği */}
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 20 }}>
 
-      {/* kategoriler */}
+      {/* Kategoriler */}
        <Categories></Categories>
+      {/* Detaylar */}
+      <View className="mt-5">
+        {
+          [featured, featured, featured].map((item,index)=>{
+            return(
+              <FeaturedRow
+              key={index}
+              title={item.title}
+              description={item.description}
+              restaurants={item.restaurants}
+              />
+            )
+          })
+        }
+
+      </View>
       </ScrollView>
-
-
     </SafeAreaView>
   );
 }
