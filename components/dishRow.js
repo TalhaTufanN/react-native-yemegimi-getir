@@ -1,0 +1,45 @@
+import { View, Text, Image, TouchableOpacity } from "react-native";
+import React from "react";
+import { themeColors } from "../theme/theme";
+import Icon from "react-native-vector-icons/Feather";
+
+export default function DishRow({ item }) {
+  return (
+    <View
+      style={{ shadowColor: themeColors.bgColor(1) }}
+      className="flex-row items-center bg-white rounded-3xl pt-1  mb-3 mx-2  shadow-lg"
+    >
+      <Image
+        className="rounded-3xl"
+        style={{ height: 100, width: 100 }}
+        source={item.image}
+      />
+      <View className="flex flex-1 space-y-3">
+        <View className="pl-3">
+          <Text className="text-xl">{item.name}</Text>
+          <Text className="text-lg">{item.description} </Text>
+        </View>
+        <View className="flex-row justify-between pl-3 items-center">
+          <Text className="font-bold text-lg text-gray-800">
+            {item.price} TL
+          </Text>
+          <View className="flex-row items-center">
+            <TouchableOpacity
+              style={{ backgroundColor: themeColors.bgColor(1) }}
+              className="rounded-full p-1"
+            >
+              <Icon name="minus" size={20} color="white"></Icon>
+            </TouchableOpacity>
+            <Text className="p-2 font-bold text-lg">2</Text>
+            <TouchableOpacity
+              style={{ backgroundColor: themeColors.bgColor(1) }}
+              className="rounded-full p-1 mr-2"
+            >
+              <Icon name="plus" size={20} color="white"></Icon>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+    </View>
+  );
+}
