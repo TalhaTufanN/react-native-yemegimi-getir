@@ -12,7 +12,7 @@ export default function RestaurantCard({ item }) {
     >
       <View
       style={{shadowColor:themeColors.bgColor(1)}}
-      className="mr-6 bg-neutral-50 pb-1 rounded-s-3xl shadow-xl border-neutral-200">
+      className="mr-6 bg-neutral-50 pb-1 rounded-s-3xl shadow-xl">
         <Image className="h-36 w-64 rounded-t-3xl" source={item.image} />
         <View className="px-3 pb-4 space-y-2">
           <Text className="text-lg font-bold pt-2">

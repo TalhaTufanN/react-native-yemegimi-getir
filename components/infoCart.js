@@ -1,24 +1,28 @@
 import { View, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { themeColors } from '../theme/theme'
+import { useNavigation } from '@react-navigation/native'
 
 export default function InfoCart() {
-  return (
+
+    const navigation = useNavigation()
+    return (
     <View className="absolute bottom-0 w-full z-50">
         <TouchableOpacity
+        onPress={()=>navigation.navigate("Cart")}
         style={{backgroundColor:themeColors.bgColor(1)}}
         className="flex-row justify-between items-center mx-2 rounded-xl p-3 mb-2"
         >
-            <View className="p-1 ml-1 rounded-full px-3 items-center border-2 border-white ">
-                <Text className="font-extrabold text-white text-base text-center items-center">
+            <View className="p-1 ml-1 rounded-full px-3 items-center border-2 border-neutral-200 ">
+                <Text className="font-mono text-white text-base text-center items-center">
                     4
                 </Text>
             </View>
-            <Text className="flex-1 text-center items-center font-extrabold text-white text-lg" >
+            <Text className="flex-1 text-center items-center font-mono text-white text-lg" >
                 Sepete Git
             </Text>
             <View className="p-1 rounded-full px-4 items-center" style={{backgroundColor:'rgba(90,20,20,0)'}}>
-                <Text className="font-extrabold text-white text-lg text-center items-center">
+                <Text className="font-mono text-white text-lg text-center items-center">
                     {1600} TL
                 </Text>
             </View>

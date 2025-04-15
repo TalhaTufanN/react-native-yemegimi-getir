@@ -19,9 +19,10 @@ export default function RestaurantScreen() {
           <Image className="w-full h-72" source={item.image} />
           <TouchableOpacity
             onPress={() => navigation.goBack()}
-            className="absolute top-10 left-4 bg-gray-50 p-2 rounded-full"
+            className="absolute top-10 left-4 p-2 rounded-full border-2 border-neutral-300"
+            style={{backgroundColor:themeColors.bgColor(1)}}
           >
-            <Icon name="arrow-left" size={30} color={themeColors.bgColor(1)} />
+            <Icon name="arrow-left" size={30} color="white" />
           </TouchableOpacity>
         </View>
         <View
