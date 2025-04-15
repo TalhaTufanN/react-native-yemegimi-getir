@@ -4,8 +4,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './screens/HomeScreen';
 import RestaurantScreen from './screens/RestaurantScreen';
 import CartScreen from './screens/CartScreen';
-import { TransitionPresets } from '@react-navigation/stack';
 import OrderPreparingScreen from './screens/OrderPreparingScreen';
+import DeliveryScreen from './screens/DeliveryScreen';
 const Stack = createNativeStackNavigator();
 export default function Navigation() {
     return (
@@ -15,6 +15,7 @@ export default function Navigation() {
             <Stack.Screen name="Restaurant" component={RestaurantScreen} />
             <Stack.Screen name="OrderPrepare" component={OrderPreparingScreen} />
             <Stack.Screen name="Cart" component={CartScreen}/>
+            <Stack.Screen name="Delivery" component={DeliveryScreen}/>
           </Stack.Navigator>
         </NavigationContainer>
       );
