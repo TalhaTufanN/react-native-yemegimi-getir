@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { cartSlice } from './slices/cartSlice'
-import { restaurantSlice } from './slices/restaurantSlice'
+import cartReducer from './slices/cartSlice'  // default export'u import edin
+import restaurantReducer from './slices/restaurantSlice'  // default export'u import edin
 
 export default configureStore({
   reducer: {
-    cart:cartSlice,
-    restaurant:restaurantSlice
+    cart: cartReducer,
+    restaurant: restaurantReducer
   },
 })
