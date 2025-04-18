@@ -25,31 +25,33 @@ export default function HomeScreen() {
             <Text className="text-gray-500">İstanbul</Text>
           </View>
         </View>
-          <View style={{backgroundColor:themeColors.bgColor(1),borderRadius:100}} className="p-3">
-            <Icon name="sliders" color="white" size={20} />
-          </View>
+        <View
+          style={{ backgroundColor: themeColors.bgColor(1), borderRadius: 100 }}
+          className="p-3"
+        >
+          <Icon name="sliders" color="white" size={20} />
+        </View>
       </View>
       {/* Ana ekran içeriği */}
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 20 }}>
-
-      {/* Kategoriler */}
-       <Categories></Categories>
-      {/* Detaylar */}
-      <View className="mt-5">
-        {
-          [featured, featured, featured].map((item,index)=>{
-            return(
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: 20 }}
+      >
+        {/* Kategoriler */}
+        <Categories />
+        {/* Detaylar */}
+        <View className="mt-5">
+          {[featured, featured, featured].map((item, index) => {
+            return (
               <FeaturedRow
-              key={index}
-              title={item.title}
-              description={item.description}
-              restaurants={item.restaurants}
+                key={index}
+                title={item.title}
+                description={item.description}
+                restaurants={item.restaurants}
               />
-            )
-          })
-        }
-
-      </View>
+            );
+          })}
+        </View>
       </ScrollView>
     </SafeAreaView>
   );

@@ -1,26 +1,35 @@
 import { View, Text, ScrollView, Image, TouchableOpacity } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Feather";
 import { themeColors } from "../theme/theme";
 import DishRow from "../components/dishRow";
 import InfoCart from "../components/infoCart";
+import { useDispatch } from "react-redux";
+import { setRestaurant } from "../slices/restaurantSlice";
 
 export default function RestaurantScreen() {
   const { params } = useRoute();
   const navigation = useNavigation();
   let item = params;
+  const dispatch = useDispatch();
   // console.log('restaurant: ', item);
+  useEffect(() => {
+    if (item && item.id) {
+      dispatch(setRestaurant({ ...item }));
+    }
+  }, []);
+
   return (
     <View className="flex-1">
-      <InfoCart/>
+      <InfoCart />
       <ScrollView>
         <View className="relative">
           <Image className="w-full h-72" source={item.image} />
           <TouchableOpacity
             onPress={() => navigation.goBack()}
             className="absolute top-10 left-4 p-2 rounded-full border-2 border-neutral-300"
-            style={{backgroundColor:themeColors.bgColor(1)}}
+            style={{ backgroundColor: themeColors.bgColor(1) }}
           >
             <Icon name="arrow-left" size={30} color="white" />
           </TouchableOpacity>
@@ -53,12 +62,12 @@ export default function RestaurantScreen() {
             <Text className="text-gray-500 mt-2">{item.description}</Text>
           </View>
         </View>
-        <View className="pb-36 bg-white" >
+        <View className="pb-36 bg-white">
           <Text className="px-4 py-4 text-2xl font-bold">Menü</Text>
           {/* Yemekler */}
-          {
-            item.dishes.map((dish,index)=> <DishRow item={{...dish}} key={index} />)
-          }
+          {item.dishes.map((dish, index) => (
+            <DishRow item={{ ...dish }} key={index} />
+          ))}
         </View>
       </ScrollView>
     </View>

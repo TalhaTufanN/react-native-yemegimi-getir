@@ -2,8 +2,24 @@ import { View, Text, Image, TouchableOpacity } from "react-native";
 import React from "react";
 import { themeColors } from "../theme/theme";
 import Icon from "react-native-vector-icons/Feather";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addToCart,
+  removeFromCart,
+  selectCartItemsById,
+} from "../slices/cartSlice";
 
 export default function DishRow({ item }) {
+  const dispatch = useDispatch();
+  const totalItems = useSelector((state) =>
+    selectCartItemsById(state, item.id)
+  );
+  const handleIncrease = () => {
+    dispatch(addToCart({ ...item }));
+  };
+  const handleDecrease = () => {
+    dispatch(removeFromCart({ id: item.id }));
+  };
   return (
     <View
       style={{ shadowColor: themeColors.bgColor(1) }}
@@ -25,13 +41,16 @@ export default function DishRow({ item }) {
           </Text>
           <View className="flex-row items-center">
             <TouchableOpacity
+              onPress={handleDecrease}
+              disabled={!totalItems.length}
               style={{ backgroundColor: themeColors.bgColor(1) }}
               className="rounded-full p-1"
             >
               <Icon name="minus" size={20} color="white"></Icon>
             </TouchableOpacity>
-            <Text className="p-2 font-bold text-lg">2</Text>
+            <Text className="p-2 font-bold text-lg">{totalItems.length}</Text>
             <TouchableOpacity
+              onPress={handleIncrease}
               style={{ backgroundColor: themeColors.bgColor(1) }}
               className="rounded-full p-1 mr-2"
             >

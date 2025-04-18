@@ -24,7 +24,6 @@ export default function OrderPreparingScreen() {
         }}
         style={{ width: 300, height: 300, backgroundColor: "transparent" }}
       />
-      {/* <Image source={require("../assets/images/stew.gif")} className="h-72 w-72" /> */}
     </View>
   );
 }
