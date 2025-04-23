@@ -32,7 +32,7 @@ export default {
       type: 'number',
     },
     {
-      name: 'adress',
+      name: 'address',
       title: 'Restoran Adresi',
       type: 'string',
       validation: (rule) => rule.required(),

@@ -1,4 +1,4 @@
-import {defineType} from 'sanity'
+import { defineType } from 'sanity'
 export default defineType({
   name: 'featured',
   title: 'Öne Çıkan Restoranlar',
@@ -6,13 +6,13 @@ export default defineType({
   fields: [
     {
       name: 'name',
-      title: 'Restoran Adı',
+      title: 'Mutfak Adı',
       type: 'string',
       validation: (rule) => rule.required(),
     },
     {
       name: 'description',
-      title: 'Restoran Açıklaması',
+      title: 'Mutfak Açıklaması',
       type: 'string',
       validation: (rule) => rule.max(200),
     },
@@ -20,7 +20,7 @@ export default defineType({
       name: 'restaurants',
       title: 'Restoranlar',
       type: 'array',
-      of: [{type: 'reference', to: [{type: 'restaurant'}]}],
+      of: [{ type: 'reference', to: [{ type: 'restaurant' }] }],
     },
   ],
 })
