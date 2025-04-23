@@ -6,7 +6,7 @@ import RestaurantCard from "./restaurantCard";
 export default function FeaturedRow({ title, description, restaurants }) {
   return (
     <View>
-      <View className="flex-row justify-between items-center mx-2">
+      <View className="flex-row justify-between items-center mx-4 mb-2">
         <View className="mt-2">
           <Text className="text-xl font-bold">{title}</Text>
           <Text className="text-sm font-sans">{description}</Text>
@@ -22,8 +22,9 @@ export default function FeaturedRow({ title, description, restaurants }) {
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{
           paddingHorizontal: 15,
+          paddingBottom: 45,
         }}
-        className="overflow-visible py-5"
+        className="overflow-visible"
       >
         {restaurants.map((restaurant, index) => {
           return <RestaurantCard item={restaurant} key={index} />;
