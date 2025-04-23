@@ -8,17 +8,18 @@ import {
   removeFromCart,
   selectCartItemsById,
 } from "../slices/cartSlice";
+import { urlFor } from "../sanity";
 
 export default function DishRow({ item }) {
   const dispatch = useDispatch();
   const totalItems = useSelector((state) =>
-    selectCartItemsById(state, item.id)
+    selectCartItemsById(state, item._id)
   );
   const handleIncrease = () => {
     dispatch(addToCart({ ...item }));
   };
   const handleDecrease = () => {
-    dispatch(removeFromCart({ id: item.id }));
+    dispatch(removeFromCart({ id: item._id }));
   };
   return (
     <View
@@ -28,7 +29,7 @@ export default function DishRow({ item }) {
       <Image
         className="rounded-3xl"
         style={{ height: 100, width: 100 }}
-        source={item.image}
+        source={{uri: urlFor(item.image).url()}}
       />
       <View className="flex flex-1 space-y-3">
         <View className="pl-3">

@@ -13,7 +13,7 @@ export const cartSlice = createSlice({
     removeFromCart: (state, action) => {
       let newCart = [...state.items];
       let itemIndex = state.items.findIndex(
-        (item) => item.id == action.payload.id
+        (item) => item._id == action.payload.id
       );
       if (itemIndex >= 0) {
         newCart.splice(itemIndex, 1);
@@ -28,15 +28,15 @@ export const cartSlice = createSlice({
   },
 });
 
-export const { addToCart, removeFromCart, emptyCart } = cartSlice.actions;
 export const selectCartItems = (state) => state.cart.items;
 
 export const selectCartItemsById = createSelector(
   [selectCartItems, (state, id) => id],
-  (items, id) => items.filter((item) => item.id == id)
+  (items, id) => items.filter((item) => item._id == id)
 );
 
 export const selectCartTotal = (state) =>
   state.cart.items.reduce((total, item) => (total = total + item.price), 0);
 
+export const { addToCart, removeFromCart, emptyCart } = cartSlice.actions;
 export default cartSlice.reducer;

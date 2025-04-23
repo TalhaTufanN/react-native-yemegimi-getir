@@ -1,6 +1,5 @@
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import React from "react";
-import { featured } from "../constants";
 import { useNavigation } from "@react-navigation/native";
 import MapView, { Marker } from "react-native-maps";
 import { themeColors } from "../theme/theme";
@@ -86,7 +85,7 @@ export default function DeliveryScreen() {
               ></Icon>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => navigation.navigate("Home")}
+              onPress={() => cancelOrder()}
               className="bg-white p-2 rounded-full"
             >
               <Icon name="x" color={themeColors.bgColor(1)} size={25}></Icon>

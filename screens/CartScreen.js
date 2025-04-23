@@ -10,6 +10,7 @@ import {
   selectCartItems,
   selectCartTotal,
 } from "../slices/cartSlice";
+import { urlFor } from "../sanity";
 
 export default function CartScreen() {
   const restaurant = useSelector(selectRestaurant);
@@ -19,118 +20,104 @@ export default function CartScreen() {
   const [groupedItems, setGroupedItems] = useState({});
   const deliveryFee = 40;
   const dispatch = useDispatch();
+
   useEffect(() => {
     const items = cartItems.reduce((group, item) => {
-      if (group[item.id]) {
-        group[item.id].push(item);
+      if (group[item._id]) {
+        group[item._id].push(item);
       } else {
-        group[item.id] = [item];
+        group[item._id] = [item];
       }
       return group;
     }, {});
     setGroupedItems(items);
   }, [cartItems]);
+
   return (
     <View className="flex-1 bg-white">
-      <View className="relative mt-10">
-        {/* Geri Butonu */}
+      <View className="p-5 border-b bg-white shadow-sm mt-5" style={{borderBottomColor: themeColors.text,}}>
+        <View>
+          <Text className="text-lg font-bold text-center">Sepetim</Text>
+          <Text className="text-center text-gray-500">
+            {restaurant?.name}
+          </Text>
+        </View>
         <TouchableOpacity
           onPress={() => navigation.goBack()}
-          style={{
-            backgroundColor: themeColors.bgColor(1),
-            shadowColor: themeColors.bgColor(1),
-          }}
-          className="absolute z-10 left-4 p-2 rounded-full shadow-lg border-2 border-neutral-300"
+          className="rounded-full bg-gray-100 absolute top-6 right-4"
         >
-          <Icon name="arrow-left" size={30} color="white" />
+          <Icon name="x" size={30} />
         </TouchableOpacity>
-        <View>
-          <Text className="text-center font-bold text-xl">Sepetim</Text>
-          <Text className="text-center text-gray-500"> {restaurant.name} </Text>
-        </View>
       </View>
-      {/* Teslimat Süresi */}
-      <View
-        style={{ backgroundColor: themeColors.bgColor(0.2) }}
-        className="flex-row px-4 items-center mt-2"
-      >
-        <Image
-          source={require("../assets/images/delivery-bike.png")}
-          className="w-16 h-16"
-        />
-        <Text className="flex-1 pl-16 font-medium">Yaklaşık 20-30 dk</Text>
+
+      <View className="flex-row items-center space-x-4 px-4 py-2 bg-white my-5">
+        {restaurant?.image ? (
+          <Image
+            source={{uri: urlFor(restaurant.image).url()}}
+            className="h-7 w-7 bg-gray-300 p-4 rounded-full"
+          />
+        ) : (
+          <View className="h-7 w-7 bg-gray-300 p-4 rounded-full" />
+        )}
+        <Text className="flex-1">Teslimat 20-30 dk</Text>
         <TouchableOpacity>
-          <Text className="font-bold" style={{ color: themeColors.text }}>
-            Değiştir
-          </Text>
+          <Text style={{color: themeColors.text}}>Değiştir</Text>
         </TouchableOpacity>
       </View>
-      {/* Sepetteki Yemekler */}
+
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{
-          paddingBottom: 50,
-        }}
-        className="bg-white pt-5"
+        className="divide-y divide-gray-200"
       >
         {Object.entries(groupedItems).map(([key, items]) => {
           let dish = items[0];
           return (
             <View
               key={key}
-              shadowColor={themeColors.bgColor(1)}
-              className="flex-row items-center space-x-3 border-b-4 border-b-neutral-200 py-2 px-4 bg-white rounded-full shadow-lg"
+              className="flex-row items-center space-x-3 bg-white py-2 px-5"
             >
-              <Text className="font-bold" style={{ color: themeColors.text }}>
-                {items.length} x
+              <Text style={{color: themeColors.text}}>{items.length} x</Text>
+              <Image
+                className="h-12 w-12 rounded-full"
+                source={{uri: urlFor(dish.image).url()}}
+              />
+              <Text className="flex-1">{dish.name}</Text>
+              <Text className="text-gray-600">
+                {dish.price * items.length} TL
               </Text>
-              <Image className="w-14 h-14 rounded-full" source={dish.image} />
-              <Text className="flex-1 font-bold text-gray-700">
-                {dish.name}
-              </Text>
-              <Text className="text-base font-semibold ">{dish.price}</Text>
               <TouchableOpacity
-                className="p-1 rounded-full"
-                onPress={() => dispatch(removeFromCart({ id: dish.id }))}
-                style={{ backgroundColor: themeColors.bgColor(1) }}
+                onPress={() => dispatch(removeFromCart({ id: dish._id }))}
               >
-                <Icon name="minus" size={20} color="white" />
+                <Text style={{color: themeColors.text}} className="text-xs">Kaldır</Text>
               </TouchableOpacity>
             </View>
           );
         })}
       </ScrollView>
 
-      {/* Toplam Tutar */}
-      <View
-        style={{ backgroundColor: themeColors.bgColor(0.2) }}
-        className="p-6 px-6 rounded-t-3xl space-y-1 mb-0"
-      >
+      <View className="p-5 bg-white mt-5 space-y-4">
         <View className="flex-row justify-between">
-          <Text className="text-gray-700">Sipariş Ücreti</Text>
-          <Text className="text-gray-700">{cartTotal} TL</Text>
+          <Text className="text-gray-400">Ara Toplam</Text>
+          <Text className="text-gray-400">{cartTotal} TL</Text>
         </View>
         <View className="flex-row justify-between">
-          <Text className="text-gray-700">Kargo Ücreti</Text>
-          <Text className="text-gray-700">{deliveryFee}</Text>
+          <Text className="text-gray-400">Teslimat Ücreti</Text>
+          <Text className="text-gray-400">{deliveryFee} TL</Text>
         </View>
         <View className="flex-row justify-between">
-          <Text className="text-gray-700 font-extrabold">Toplam</Text>
-          <Text className="text-gray-700 font-extrabold">
-            {cartTotal + deliveryFee} TL
+          <Text>Toplam</Text>
+          <Text className="font-extrabold">{cartTotal + deliveryFee} TL</Text>
+        </View>
+
+        <TouchableOpacity
+          onPress={() => navigation.navigate("OrderPrepare")}
+          style={{ backgroundColor: themeColors.bgColor(1) }}
+          className="rounded-lg p-4"
+        >
+          <Text className="text-center text-white text-lg font-bold">
+            Sipariş Ver
           </Text>
-        </View>
-        <View>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("OrderPrepare")}
-            style={{ backgroundColor: themeColors.bgColor(1) }}
-            className="p-3 rounded-full"
-          >
-            <Text className="text-white text-center font-bold text-lg">
-              Sipariş Ver
-            </Text>
-          </TouchableOpacity>
-        </View>
+        </TouchableOpacity>
       </View>
     </View>
   );

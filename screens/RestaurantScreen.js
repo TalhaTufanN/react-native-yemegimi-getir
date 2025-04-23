@@ -7,6 +7,7 @@ import DishRow from "../components/dishRow";
 import InfoCart from "../components/infoCart";
 import { useDispatch } from "react-redux";
 import { setRestaurant } from "../slices/restaurantSlice";
+import { urlFor } from "../sanity";
 
 export default function RestaurantScreen() {
   const { params } = useRoute();
@@ -15,7 +16,7 @@ export default function RestaurantScreen() {
   const dispatch = useDispatch();
   // console.log('restaurant: ', item);
   useEffect(() => {
-    if (item && item.id) {
+    if (item && item._id) {
       dispatch(setRestaurant({ ...item }));
     }
   }, []);
@@ -25,7 +26,7 @@ export default function RestaurantScreen() {
       <InfoCart />
       <ScrollView>
         <View className="relative">
-          <Image className="w-full h-72" source={item.image} />
+          <Image className="w-full h-72" source={{uri: urlFor(item.image).url()}} />
           <TouchableOpacity
             onPress={() => navigation.goBack()}
             className="absolute top-10 left-4 p-2 rounded-full border-2 border-neutral-300"
@@ -47,16 +48,16 @@ export default function RestaurantScreen() {
                   source={require("../assets/images/star.png")}
                 />
                 <Text className="text-xs">
-                  <Text className="text-green-700">{item.stars}</Text>
+                  <Text className="text-green-700">{item.rating}</Text>
                   <Text className="text-gray-700">
-                    {} ({item.reviews}) -{" "}
-                    <Text className="font-semibold">{item.category}</Text>{" "}
+                    ({item.reviews}) -{" "}
+                    <Text className="font-semibold">{item.category?.name}</Text>{" "}
                   </Text>
                 </Text>
               </View>
               <View className="flex-row items-center space-x-1 px-3">
                 <Icon name="map-pin" size={15} />
-                <Text className="text-gray-700 text-xs">{item.address}</Text>
+                <Text className="text-gray-700 text-xs">{item.adress}</Text>
               </View>
             </View>
             <Text className="text-gray-500 mt-2">{item.description}</Text>
@@ -65,7 +66,7 @@ export default function RestaurantScreen() {
         <View className="pb-36 bg-white">
           <Text className="px-4 py-4 text-2xl font-bold">Menü</Text>
           {/* Yemekler */}
-          {item.dishes.map((dish, index) => (
+          {item.dishes?.map((dish, index) => (
             <DishRow item={{ ...dish }} key={index} />
           ))}
         </View>

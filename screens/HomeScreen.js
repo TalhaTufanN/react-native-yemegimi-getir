@@ -1,14 +1,30 @@
-import { View, Text, TextInput, ScrollView } from "react-native";
-import React from "react";
+import { View, Text, TextInput, ScrollView, TouchableOpacity } from "react-native";
+import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import Icon from "react-native-vector-icons/Feather";
-import { themeColors } from "../theme/theme";
+import { cycleTheme, themeColors } from "../theme/theme";
 import Categories from "../components/categories";
 import FeaturedRow from "../components/featuredRow";
-import { featured } from "../constants";
+import { getFeaturedRestaurants } from "../api";
+
 
 export default function HomeScreen() {
+  
+  const [featuredRestaurants,setFeaturedRestaurants] = useState([]);
+  // Bu state, tema değişikliğini bileşene yansıtmak için
+  const [theme, setTheme] = useState({...themeColors});
+  
+  const handleThemeChange = () => {
+    const newTheme = cycleTheme();
+    setTheme({...newTheme}); // Bileşeni yeniden render etmek için state'i güncelle
+  };
+  useEffect(()=>{
+    getFeaturedRestaurants().then(data=>{
+      // console.log("API VERİSİ:  ", JSON.stringify(data, null, 2));
+      setFeaturedRestaurants(data);
+    })
+  },[])
   return (
     <SafeAreaView className="bg-slate-50">
       <StatusBar barStyle="dark-content" />
@@ -29,7 +45,11 @@ export default function HomeScreen() {
           style={{ backgroundColor: themeColors.bgColor(1), borderRadius: 100 }}
           className="p-3"
         >
-          <Icon name="sliders" color="white" size={20} />
+          <TouchableOpacity
+            onPress={handleThemeChange}
+            >
+            <Icon name="sliders" color="white" size={20} />
+          </TouchableOpacity>
         </View>
       </View>
       {/* Ana ekran içeriği */}
@@ -39,18 +59,20 @@ export default function HomeScreen() {
       >
         {/* Kategoriler */}
         <Categories />
-        {/* Detaylar */}
+        {/* Öne Çıkanlar*/}
         <View className="mt-5">
-          {[featured, featured, featured].map((item, index) => {
+          {
+          featuredRestaurants.map((item, index) => {
             return (
               <FeaturedRow
                 key={index}
-                title={item.title}
+                title={item.name}
                 description={item.description}
                 restaurants={item.restaurants}
               />
-            );
-          })}
+            )
+          })
+          }
         </View>
       </ScrollView>
     </SafeAreaView>
