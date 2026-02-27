@@ -8,7 +8,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
-import Icon from "react-native-vector-icons/Feather";
+import Icon from "@expo/vector-icons/Feather";
 import { cycleTheme, themeColors } from "../theme/theme";
 import Categories from "../components/categories";
 import FeaturedRow from "../components/featuredRow";
@@ -76,7 +76,7 @@ export default function HomeScreen() {
           })}
         </View>
         {/* En alt */}
-        <View className="flex-row items-center space-x-2 mt-1 px-3 mr-14 p-6 bg-slate-50" />
+        <View className="flex-row items-center space-x-2 mt-1 px-3 mr-14 p-8 bg-slate-50" />
       </ScrollView>
     </SafeAreaView>
   );

@@ -1,7 +1,7 @@
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import React from "react";
 import { themeColors } from "../theme/theme";
-import Icon from "react-native-vector-icons/Feather";
+import Icon from "@expo/vector-icons/Feather";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addToCart,
@@ -13,7 +13,7 @@ import { urlFor } from "../sanity";
 export default function DishRow({ item }) {
   const dispatch = useDispatch();
   const totalItems = useSelector((state) =>
-    selectCartItemsById(state, item._id)
+    selectCartItemsById(state, item._id),
   );
   const handleIncrease = () => {
     dispatch(addToCart({ ...item }));
@@ -29,7 +29,7 @@ export default function DishRow({ item }) {
       <Image
         className="rounded-3xl"
         style={{ height: 100, width: 100 }}
-        source={{uri: urlFor(item.image).url()}}
+        source={{ uri: urlFor(item.image).url() }}
       />
       <View className="flex flex-1 space-y-3">
         <View className="pl-3">

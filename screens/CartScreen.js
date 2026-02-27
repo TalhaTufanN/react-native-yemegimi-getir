@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity, Image, ScrollView } from "react-native";
 import React, { useEffect, useState } from "react";
-import Icon from "react-native-vector-icons/Feather";
+import Icon from "@expo/vector-icons/Feather";
 import { useNavigation } from "@react-navigation/native";
 import { themeColors } from "../theme/theme";
 import { useDispatch, useSelector } from "react-redux";
@@ -35,12 +35,13 @@ export default function CartScreen() {
 
   return (
     <View className="flex-1 bg-white">
-      <View className="p-5 border-b bg-white shadow-sm mt-5" style={{borderBottomColor: themeColors.text,}}>
+      <View
+        className="p-5 border-b bg-white shadow-sm mt-5"
+        style={{ borderBottomColor: themeColors.text }}
+      >
         <View>
           <Text className="text-lg font-bold text-center">Sepetim</Text>
-          <Text className="text-center text-gray-500">
-            {restaurant?.name}
-          </Text>
+          <Text className="text-center text-gray-500">{restaurant?.name}</Text>
         </View>
         <TouchableOpacity
           onPress={() => navigation.goBack()}
@@ -53,7 +54,7 @@ export default function CartScreen() {
       <View className="flex-row items-center space-x-4 px-4 py-2 bg-white my-5">
         {restaurant?.image ? (
           <Image
-            source={{uri: urlFor(restaurant.image).url()}}
+            source={{ uri: urlFor(restaurant.image).url() }}
             className="h-7 w-7 bg-gray-300 p-4 rounded-full"
           />
         ) : (
@@ -61,7 +62,7 @@ export default function CartScreen() {
         )}
         <Text className="flex-1">Teslimat 20-30 dk</Text>
         <TouchableOpacity>
-          <Text style={{color: themeColors.text}}>Değiştir</Text>
+          <Text style={{ color: themeColors.text }}>Değiştir</Text>
         </TouchableOpacity>
       </View>
 
@@ -76,10 +77,10 @@ export default function CartScreen() {
               key={key}
               className="flex-row items-center space-x-3 bg-white py-2 px-5"
             >
-              <Text style={{color: themeColors.text}}>{items.length} x</Text>
+              <Text style={{ color: themeColors.text }}>{items.length} x</Text>
               <Image
                 className="h-12 w-12 rounded-full"
-                source={{uri: urlFor(dish.image).url()}}
+                source={{ uri: urlFor(dish.image).url() }}
               />
               <Text className="flex-1">{dish.name}</Text>
               <Text className="text-gray-600">
@@ -88,7 +89,9 @@ export default function CartScreen() {
               <TouchableOpacity
                 onPress={() => dispatch(removeFromCart({ id: dish._id }))}
               >
-                <Text style={{color: themeColors.text}} className="text-xs">Kaldır</Text>
+                <Text style={{ color: themeColors.text }} className="text-xs">
+                  Kaldır
+                </Text>
               </TouchableOpacity>
             </View>
           );

@@ -1,7 +1,7 @@
 import { View, Text, ScrollView, Image, TouchableOpacity } from "react-native";
 import React, { useEffect } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import Icon from "react-native-vector-icons/Feather";
+import Icon from "@expo/vector-icons/Feather";
 import { themeColors } from "../theme/theme";
 import DishRow from "../components/dishRow";
 import InfoCart from "../components/infoCart";
@@ -26,7 +26,10 @@ export default function RestaurantScreen() {
       <InfoCart />
       <ScrollView>
         <View className="relative">
-          <Image className="w-full h-72" source={{uri: urlFor(item.image).url()}} />
+          <Image
+            className="w-full h-72"
+            source={{ uri: urlFor(item.image).url() }}
+          />
           <TouchableOpacity
             onPress={() => navigation.goBack()}
             className="absolute top-10 left-4 p-2 rounded-full border-2 border-neutral-300"
@@ -51,7 +54,9 @@ export default function RestaurantScreen() {
                   <Text className="text-green-700">{item.rating}</Text>
                   <Text className="text-gray-700">
                     ({item.reviews}) -{" "}
-                    <Text className="font-semibold">{item.category?.name}</Text>{" "}
+                    <Text className="font-semibold">
+                      {item.category?.name}
+                    </Text>{" "}
                   </Text>
                 </Text>
               </View>

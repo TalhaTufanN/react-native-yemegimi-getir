@@ -22,7 +22,7 @@ export default function FeaturedRow({ title, description, restaurants }) {
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{
           paddingHorizontal: 15,
-          paddingBottom: 45,
+          paddingBottom: 15,
         }}
         className="overflow-visible"
       >
